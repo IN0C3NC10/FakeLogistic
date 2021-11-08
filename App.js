@@ -15,7 +15,7 @@ export default function App() {
           name="Home" 
           component={Home} 
           options={{ 
-            title:'Bem-Vindo(a)!',
+            title:'FAKE LOGISTIC',
             headerStyle:{backgroundColor:'#004aad'},
             headerTintColor:'#fff',
             headerTitleStyle:{fontWeight:'bold', alignSelf: 'center'}
