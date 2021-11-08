@@ -1,14 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Home, Login, Track} from './views/_index'
 import { css } from './assets/css/Css'
 
 export default function App() {
+
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={css.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+          name="Home" 
+          component={Home} 
+          options={{ 
+            title:'Bem-Vindo(a)!',
+            headerStyle:{backgroundColor:'#004aad'},
+            headerTintColor:'#fff',
+            headerTitleStyle:{fontWeight:'bold', alignSelf: 'center'}
+           }}
+          />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Track" component={Track} />
+        {/* <Stack.Screen name="Restricted" component={Restricted} /> */}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
