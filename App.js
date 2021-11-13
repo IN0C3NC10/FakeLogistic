@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home, Login, Track} from './views/_index'
-import { css } from './assets/css/Css'
+import { css } from './assets/css/Style'
 
 export default function App() {
 
@@ -21,7 +21,7 @@ export default function App() {
             headerTitleStyle:{fontWeight:'bold', alignSelf: 'center'}
            }}
           />
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
         <Stack.Screen name="Track" component={Track} />
         {/* <Stack.Screen name="Restricted" component={Restricted} /> */}
       </Stack.Navigator>
