@@ -10,6 +10,7 @@
     "nodemon": "./node_modules/.bin/nodemon"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "cors": "^2.8.5",

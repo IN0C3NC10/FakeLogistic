@@ -33,13 +33,12 @@ const css = StyleSheet.create({
     loginForm: {
         width: '80%',
     },
-    loginMsg: (text = 'none') => ({
+    loginMsg:{
         fontWeight: 'bold',
         fontSize: 15,
         color: 'red',
         marginVertical: 10,
-        display: text,
-    }),
+    },
     loginInp: {
         backgroundColor: light,
         fontSize: 19,
@@ -55,7 +54,7 @@ const css = StyleSheet.create({
     loginBtnTxt: {
         fontWeight: 'bold',
         fontSize: 22,
-        color: dark,
+        color: light,
     },
 });
 
