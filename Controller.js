@@ -13,6 +13,10 @@ let user = models.User;
 let tracking = models.Tracking;
 let product = models.Product;
 
+//................................................................
+// ..ROTAS
+//................................................................
+// ..login
 app.post('/login',async (req,res)=>{
     let response = await user.findOne({
         where:{
@@ -26,6 +30,10 @@ app.post('/login',async (req,res)=>{
         res.send(response);
     }
 });
+//................................................................
+// ..ROTAS
+//................................................................
+
 
 // ..recebe a porta do env ou em caso de local é a porta 3000
 let port = process.env.PORT || 3000;
