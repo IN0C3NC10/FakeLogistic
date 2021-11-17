@@ -35,8 +35,8 @@ export default function Restricted() {
                     <FontAwesome name="user" size={18} color="#333" />
                 }
             }} />
-            <Tab.Screen name="Register" component={Register} />
-            <Tab.Screen name="Edit" component={Edit} />
+            <Tab.Screen name="Register" component={Register} options={{headerShown:false,}}/>
+            <Tab.Screen name="Edit" component={Edit} options={{headerShown:false,}}/>
         </Tab.Navigator>
     );
 }

@@ -1,16 +1,14 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Profile, Register, Edit} from './views/_index'
+import MenuRestricted from '../../assets/components/menuRestricted';
+import { css } from '../../assets/css/Style';
 
-export default function Register() {
+export default function Register({navigation}) {
     
 
     return (
-        <View>
-            <Text>Ola</Text>
+        <View style={[css.container, css.containerTop]}>
+            <MenuRestricted title='Cadastro' navigation={navigation} />
         </View>
     );
 }

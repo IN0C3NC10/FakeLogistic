@@ -1,16 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Profile, Register} from './views/_index'
+import MenuRestricted from '../../assets/components/menuRestricted';
+import { css } from '../../assets/css/Style';
 
-export default function Edit() {
+
+export default function Edit({navigation}) {
     
 
     return (
-        <View>
-            <Text>Ola</Text>
+        <View style={[css.container, css.containerTop]}>
+            <MenuRestricted title='Edição' navigation={navigation} />
         </View>
     );
 }

@@ -13,6 +13,9 @@ const css = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    containerTop: {
+        justifyContent: 'flex-start',
+    },
     home: {
         flex: 1,
         flexDirection: 'row',
