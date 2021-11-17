@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 import Login from "../../views/Login";
-let dark = "#333";
+let shadow = "#333";
 let light = "#fff";
 let main = "#004aad";
 const css = StyleSheet.create({
     darkBkg: {
-        backgroundColor: dark,
+        backgroundColor: shadow,
     },
     container: {
         flex: 1,
@@ -55,6 +55,35 @@ const css = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 22,
         color: light,
+    },
+    areaTab:{
+        backgroundColor: shadow,
+        fontSize:20,
+        fontWeight:"bold",
+        color:shadow,
+    },
+    // ..profile
+    btnHome2:{
+        textAlign:"left",
+    },
+    btnLogout:{
+        textAlign:"right",
+    },
+    areaMenu:{
+        flexDirection:"row",
+        paddingTop:40,
+        paddingBottom:10,
+        width:"100%",
+        backgroundColor:"#111",
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    areaTitle:{
+        width:"100%",
+        fontWeight:"bold",
+        fontSize:20,
+        color:light,
+        textAlign:"center"
     },
 });
 

@@ -25,7 +25,7 @@ export default function App() {
           />
         <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
         <Stack.Screen name="Track" component={Track} />
-        <Stack.Screen name="Restricted" component={Restricted} />
+        <Stack.Screen name="Restricted" component={Restricted} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
