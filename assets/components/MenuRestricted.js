@@ -13,11 +13,11 @@ export default function MenuRestricted(props){
     return (
         <View style={css.areaMenu}>
             <TouchableOpacity style={css.btnHome2} onPress={()=>props.navigation.navigate('Home')}>
-                <FontAwesome name="home" size={20} color="#999" />
+                <FontAwesome name="home" size={20} color="#fff" />
             </TouchableOpacity>
             <Text style={css.areaTitle}>{props.title}</Text>
             <TouchableOpacity style={css.btnLogout} onPress={()=>logout()}>
-                <FontAwesome name="sign-out" size={20} color="#999" />
+                <FontAwesome name="sign-out" size={20} color="#fff" />
             </TouchableOpacity>
         </View>
     );

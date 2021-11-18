@@ -31,10 +31,12 @@ export default function Restricted({ navigation }) {
                     onPress: () => null,
                     style: 'cancel',
                 },
-                { text: 'Sim', onPress: () => {
-                    navigation.navigate('Home');
-                    BackHandler.exitApp();
-                }},
+                {
+                    text: 'Sim', onPress: () => {
+                        navigation.navigate('Home');
+                        BackHandler.exitApp();
+                    }
+                },
             ]);
             return true;
         };
@@ -49,21 +51,51 @@ export default function Restricted({ navigation }) {
 
     return (
         <Tab.Navigator
-            active-color='#999'
-            inactiveColor='#fff'
-            tabBarItemStyle={css.areaTab}
+            tabBarOptions={{
+                activeTintColor: '#fff',
+                inactiveTintColor: '#999',
+                activeBackgroundColor: '#000',
+                inactiveBackgroundColor: '#333',
+                style: {
+                    fontWeight:'bold',
+                    backgroundColor: '#333',
+                    paddingBottom: 3
+                }
+            }}
         >
             <Tab.Screen
                 name="Profile"
                 component={Profile}
                 options={{
+                    title: 'Perfil',
                     headerShown: false,
-                    tabBarIcon: () => {
-                        <FontAwesome name="user" size={18} color="#333" />
-                    }
-                }} />
-            <Tab.Screen name="Register" component={Register} options={{ headerShown: false, }} />
-            <Tab.Screen name="Edit" component={Edit} options={{ headerShown: false, }} />
+                    tabBarIcon: () => (
+                        <FontAwesome name="user" size={20} color="white" />
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="Register"
+                component={Register}
+                options={{
+                    title: 'Cadastrar',
+                    headerShown: false,
+                    tabBarIcon: () => (
+                        <FontAwesome name="archive" size={20} color="white" />
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="Edit"
+                component={Edit}
+                options={{
+                    title: 'Editar',
+                    headerShown: false,
+                    tabBarIcon: () => (
+                        <FontAwesome name="pencil-square" size={20} color="white" />
+                    )
+                }}
+            />
         </Tab.Navigator>
     );
 }
