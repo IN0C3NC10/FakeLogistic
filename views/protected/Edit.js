@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import MenuRestricted from '../../assets/components/menuRestricted';
 import { useState, useEffect } from 'react';
 import { css } from '../../assets/css/Style';
@@ -14,6 +14,8 @@ export default function Edit({ navigation }) {
     const [product, setProduct] = useState(null);
     const [localization, setLocalization] = useState(null);
     const [code, setCode] = useState(null);
+    const [searchCode, setSearchCode] = useState(false);
+    const [response, setResponse] = useState(null);
 
     // ..pede a permissão para usar a câmera do usuário
     useEffect(() => {
@@ -55,32 +57,44 @@ export default function Edit({ navigation }) {
             }),
         });
         let json = await response.json();
-        setProduct(json.Products[0].name);
+        setProduct(json);
     };
 
     // ..envio do formulário
     async function sendForm() {
-        // let response = await fetch(`${config.urlRoot}/store`,{
-        //     method:"POST",
-        //     body:JSON.stringify({
-        //         id:idUser,
-        //         code:code,
-        //         product:product,
-        //         address:address,
-        //     }),
-        //     headers: {
-        //         Accept: 'application/json',
-        //         "Content-Type": "application/json"
-        //     },
-        // });
-        // let json = await response.json();
-        // setResponse(json);
+        let response = await fetch(`${config.urlRoot}/update`, {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                code: code,
+                product: product,
+                local: localization,
+            }),
+        });
+        let json = await response.json();
+        setResponse(json);
     }
 
     // ..função que retorna as coordenadas do usuário
     async function getLocation() {
         let location = await Location.getCurrentPositionAsync({});
         setLocalization(`${location.coords.latitude}, ${location.coords.longitude}`);
+    }
+
+    // ..nova leitura do QRCode
+    async function readAgain() {
+        // setScanned(false);
+        setCode('');
+        setProduct('');
+        setLocalization('');
+    }
+
+    // ..leitura manual
+    async function readCode() {
+        setSearchCode(true);
     }
 
     return (
@@ -94,7 +108,7 @@ export default function Edit({ navigation }) {
                     />
                     :
                     <View style={css.qrForm}>
-                        <Text>Código do produto: {code}</Text>
+                        <Text>{response}</Text>
                         <View style={css.loginInp}>
                             <TextInput value={product} placeholder='Nome do produto' onChangeText={text => setProduct(text)} />
                         </View>
@@ -104,8 +118,30 @@ export default function Edit({ navigation }) {
                         <TouchableOpacity style={css.loginBtn} onPress={() => sendForm()}>
                             <Text>Cadastrar</Text>
                         </TouchableOpacity>
+                        <View>
+                            <Button title='Escanear Novamente' onPress={() => readAgain()} />
+                        </View>
+                        <View>
+                            <Button title='Escanear Manualmente' onPress={() => readCode()} />
+                        </View>
                     </View>
             }
+
+            {
+                searchCode == true ?
+                    <View style={css.qrForm}>
+                        <Text>Pesquise pelo código</Text>
+                        <View style={css.loginInp}>
+                            <TextInput value={code} placeholder='Código do produto' onChangeText={text => setCode(text)} />
+                        </View>
+                        <TouchableOpacity style={css.loginBtn} onPress={() => searchProduct(code)}>
+                            <Text>Buscar</Text>
+                        </TouchableOpacity>
+                    </View>
+                    :
+                    <View />
+            }
+
         </View>
     );
 }

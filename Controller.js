@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const models = require('./models/index');
+const models = require('./models/');
 const QRCode = require('qrcode');
 
 const app = express();
@@ -88,18 +88,41 @@ app.post('/store', async (req, res) => {
 
 // ..mostra os dados de um produto
 app.post('/show', async (req, res) => {
-    let response = await tracking.findOne({
-        include:[{models:product}],
+    let response = await tracking.findAll({
         where: {
             code: req.body.code,
-        }
+        },
+        include:[{
+            model:product,
+        }],
     });
     
     if (response === null) {
         res.send(JSON.stringify('error'));
     } else {
-        res.send(JSON.stringify(response));
+        // ..retorna apenas o nome do produto
+        res.send(JSON.stringify(response[0].Products[0].name));
     }
+});
+
+// ..mostra os dados de um produto
+app.post('/update', async (req, res) => {
+    let response = await tracking.findAll({
+        where: {
+            code: req.body.code,
+        },
+        include:[{model:product}],
+    });
+    // ..atualiza os dados
+    response[0].local = req.body.local;
+    response[0].updatedAt = new Date();
+    response[0].Products[0].name = req.body.product;
+    // ..de fato os salva
+    response[0].save();
+    response[0].Products[0].save();
+
+    res.send(JSON.stringify('Dados atualizados!'));
+    
 });
 //................................................................
 // ..ROTAS
