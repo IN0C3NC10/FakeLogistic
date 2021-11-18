@@ -3,6 +3,7 @@ import { View, Image, Text, KeyboardAvoidingView, TextInput, TouchableOpacity, P
 import { css } from '../assets/css/Style';
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import config from '../config/config.json';
 
 export default function Login({ navigation }) {
 
@@ -16,7 +17,7 @@ export default function Login({ navigation }) {
     // ..Função que envia os dados para a rota 'login'
     //................................................................
     async function sendForm() {
-        let response = await fetch('http://127.0.0.1:3000/login', {
+        let response = await fetch(`${config.urlRoot}/login`, {
             method: "POST",
             headers: {
                 Accept: 'application/json',

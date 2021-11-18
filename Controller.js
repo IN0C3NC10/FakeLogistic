@@ -16,6 +16,7 @@ let product = models.Product;
 //................................................................
 // ..ROTAS
 //................................................................
+
 // ..login
 app.post('/login',async (req,res)=>{
     let response = await user.findOne({
@@ -28,6 +29,31 @@ app.post('/login',async (req,res)=>{
         res.send(JSON.stringify('error'));
     }else{
         res.send(response);
+    }
+});
+
+// ..altera a senha
+app.post('/verifyPass', async (req,res)=>{
+    // ..realiza a busca no banco
+    let response = await user.findOne({
+        where:{
+            id:req.body.id,
+            password:req.body.oldPass,
+        }
+    })
+    // ..recebe se a senha existe
+    if (response===null) {
+        res.send(JSON.stringify('Senha inválida!'));
+    }else{
+        // ..se existir, verifica se as 2 novas batem
+        if (req.body.newPass === req.body.confNewPass) {
+            response.password = req.body.newPass;
+            response.save();
+            res.send(JSON.stringify('Senha atualizada!'));    
+        }else{
+            res.send(JSON.stringify('Novas senhas não conferem!'));
+        }
+        
     }
 });
 //................................................................
