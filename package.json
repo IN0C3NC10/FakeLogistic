@@ -28,7 +28,9 @@
     "react-native-screens": "~3.8.0",
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
-    "sequelize": "^6.9.0"
+    "sequelize": "^6.9.0",
+    "expo-file-system": "~13.0.3",
+    "expo-sharing": "~10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

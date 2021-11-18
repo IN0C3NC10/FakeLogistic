@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import MenuRestricted from '../../assets/components/menuRestricted';
 import { css } from '../../assets/css/Style';
 import config from '../../config/config.json';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
 
 export default function Register({navigation}) {
     const address = config.origin;
@@ -58,6 +60,18 @@ export default function Register({navigation}) {
         setResponse(json);
     }
 
+    // ..compartilha o QRCode
+    async function shareQR() {
+        const image = config.urlRoot+'/assets/img/code.png';
+        FileSystem.downloadAsync(
+            image,
+            FileSystem.documentDirectory+'code.png'
+        ).then(({uri})=>{
+            Sharing.shareAsync(uri);
+        });
+        await Sharing.shareAsync();
+    }
+
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuRestricted title='Cadastro' navigation={navigation} />
@@ -65,7 +79,7 @@ export default function Register({navigation}) {
                 response && (
                     <View>
                         <Image source={{ uri:response, height:180, width:180 }}/>
-                        <Button title='Compartilhar' />
+                        <Button title='Compartilhar' onPress={()=>shareQR()} />
                     </View>
                 )
             }
