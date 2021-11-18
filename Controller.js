@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const models = require('./models/index');
+const QRCode = require('qrcode');
 
 const app = express();
 app.use(cors());
@@ -75,20 +76,12 @@ app.post('/store', async (req, res) => {
         trackingId: trackingId,
         name: req.body.product,
     });
-    // ..recebe se a senha existe
-    if (response === null) {
-        res.send(JSON.stringify('Senha inválida!'));
-    } else {
-        // ..se existir, verifica se as 2 novas batem
-        if (req.body.newPass === req.body.confNewPass) {
-            response.password = req.body.newPass;
-            response.save();
-            res.send(JSON.stringify('Senha atualizada!'));
-        } else {
-            res.send(JSON.stringify('Novas senhas não conferem!'));
-        }
 
-    }
+    QRCode.toDataURL(req.body.code).then(url=>{
+        // ..diretorio do arquivo
+        QRCode.toFile('./assets/img/code.png', req.body.code);
+        res.send(JSON.stringify(url));
+    })
 });
 //................................................................
 // ..ROTAS

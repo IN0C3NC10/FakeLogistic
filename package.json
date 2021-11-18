@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "material-ui-community-icons": "^0.15.0",
     "mysql2": "^2.3.3-rc.0",
+    "qrcode": "^1.4.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",

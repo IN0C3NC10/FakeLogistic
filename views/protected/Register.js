@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 import MenuRestricted from '../../assets/components/menuRestricted';
 import { css } from '../../assets/css/Style';
@@ -14,12 +14,14 @@ export default function Register({navigation}) {
     const [response, setResponse] = useState(null);
 
     useEffect(() => {
-        randomCode();
-    }, []);
-
-    useEffect(() => {
         getUser();
     }, []);
+
+    // ..toda vez que o response for alterado (dados cadastrados no db), será gerado um novo code
+    useEffect(() => {
+        randomCode();
+        setProduct('');
+    }, [response]);
 
     // ..gerar um código random
     async function randomCode() {
@@ -52,15 +54,23 @@ export default function Register({navigation}) {
                 "Content-Type": "application/json"
             },
         });
-        // let json = await response.json();
-        // setMsg(json);
+        let json = await response.json();
+        setResponse(json);
     }
 
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuRestricted title='Cadastro' navigation={navigation} />
+            {
+                response && (
+                    <View>
+                        <Image source={{ uri:response, height:180, width:180 }}/>
+                        <Button title='Compartilhar' />
+                    </View>
+                )
+            }
             <View style={css.loginInp}>
-                <TextInput placeholder='Nome do produto' onChangeText={text=>setProduct(text)}/>
+                <TextInput value={product} placeholder='Nome do produto' onChangeText={text=>setProduct(text)}/>
             </View>
             <TouchableOpacity style={css.loginBtn} onPress={()=>sendForm()}>
                 <Text>Cadastrar</Text>
