@@ -85,6 +85,22 @@ app.post('/store', async (req, res) => {
         res.send(JSON.stringify(url));
     })
 });
+
+// ..mostra os dados de um produto
+app.post('/show', async (req, res) => {
+    let response = await tracking.findOne({
+        include:[{models:product}],
+        where: {
+            code: req.body.code,
+        }
+    });
+    
+    if (response === null) {
+        res.send(JSON.stringify('error'));
+    } else {
+        res.send(JSON.stringify(response));
+    }
+});
 //................................................................
 // ..ROTAS
 //................................................................
