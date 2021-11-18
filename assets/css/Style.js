@@ -88,6 +88,16 @@ const css = StyleSheet.create({
         color: light,
         textAlign: "center"
     },
+    // ..edit
+    qrCode:{
+        width:'100%',
+        height:'100%',
+        backgroundColor:shadow,
+        justifyContent:'center',
+    },
+    qrForm:{
+        width:'100%',
+    },
 });
 
 export { css };
