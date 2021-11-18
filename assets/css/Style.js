@@ -36,7 +36,7 @@ const css = StyleSheet.create({
     loginForm: {
         width: '80%',
     },
-    loginMsg:{
+    loginMsg: {
         fontWeight: 'bold',
         fontSize: 15,
         color: 'red',
@@ -59,34 +59,34 @@ const css = StyleSheet.create({
         fontSize: 22,
         color: light,
     },
-    areaTab:{
+    areaTab: {
         backgroundColor: shadow,
-        fontSize:20,
-        fontWeight:"bold",
-        color:shadow,
+        fontSize: 20,
+        fontWeight: "bold",
+        color: shadow,
     },
     // ..profile
-    btnHome2:{
-        textAlign:"left",
+    btnHome2: {
+        textAlign: "left",
     },
-    btnLogout:{
-        textAlign:"right",
+    btnLogout: {
+        textAlign: "right",
     },
-    areaMenu:{
-        flexDirection:"row",
-        paddingTop:40,
-        paddingBottom:10,
-        width:"100%",
-        backgroundColor:"#111",
-        alignItems:"center",
-        justifyContent:"center",
+    areaMenu: {
+        flexDirection: "row",
+        paddingTop: 40,
+        paddingBottom: 10,
+        width: "100%",
+        backgroundColor: "#111",
+        alignItems: "center",
+        justifyContent: "center",
     },
-    areaTitle:{
-        width:"100%",
-        fontWeight:"bold",
-        fontSize:20,
-        color:light,
-        textAlign:"center"
+    areaTitle: {
+        width: "100%",
+        fontWeight: "bold",
+        fontSize: 20,
+        color: light,
+        textAlign: "center"
     },
 });
 

@@ -20,5 +20,6 @@
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "urlRoot":"http://127.0.0.1:3000"
+  "urlRoot":"http://127.0.0.1:3000",
+  "origin": "Av. do Rato Caganu na Mata, Nº345"
 }
