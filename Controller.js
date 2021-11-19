@@ -79,7 +79,7 @@ app.post('/store', async (req, res) => {
         name: req.body.product,
     });
 
-    QRCode.toDataURL(req.body.code).then(url=>{
+    QRCode.toDataURL(req.body.code).then(url => {
         // ..diretorio do arquivo
         QRCode.toFile('./assets/img/code.png', req.body.code);
         res.send(JSON.stringify(url));
@@ -92,16 +92,40 @@ app.post('/show', async (req, res) => {
         where: {
             code: req.body.code,
         },
-        include:[{
-            model:product,
+        include: [{
+            model: product,
         }],
     });
-    
+
     if (response === null) {
         res.send(JSON.stringify('error'));
     } else {
         // ..retorna apenas o nome do produto
         res.send(JSON.stringify(response[0].Products[0].name));
+    }
+});
+
+// ..encontra os dados para o rastreio
+app.post('/show-track', async (req, res) => {
+    try {
+        let response = await tracking.findAll({
+            where: {
+                code: req.body.code,
+            },
+            include: [{
+                model: product,
+            }],
+        });
+
+        // ..retorna os dados para o fron-end em react
+        if (response == null) {
+            res.send(JSON.stringify('Nenhum produto encontrado com este código.'));
+        } else {
+            // ..retorna apenas o nome do produto
+            res.send(JSON.stringify('Sua encomenda ' + response[0].Products[0].name + ', se encontra nas seguintes coordenadas ' + response[0].local + '.'));
+        }
+    } catch (error) {
+        res.send(JSON.stringify('Ocorreu um erro, tente novamente.'));
     }
 });
 
@@ -111,7 +135,7 @@ app.post('/update', async (req, res) => {
         where: {
             code: req.body.code,
         },
-        include:[{model:product}],
+        include: [{ model: product }],
     });
     // ..atualiza os dados
     response[0].local = req.body.local;
@@ -122,7 +146,7 @@ app.post('/update', async (req, res) => {
     response[0].Products[0].save();
 
     res.send(JSON.stringify('Dados atualizados!'));
-    
+
 });
 //................................................................
 // ..ROTAS

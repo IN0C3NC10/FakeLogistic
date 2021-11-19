@@ -98,6 +98,14 @@ const css = StyleSheet.create({
     qrForm:{
         width:'100%',
     },
+    // ..track page
+    trackInp:{
+        marginTop:20,
+        marginBottom:30,
+        borderColor:'#ccc',
+        borderBottomWidth:1,
+        paddingHorizontal:20,
+    },
 });
 
 export { css };
