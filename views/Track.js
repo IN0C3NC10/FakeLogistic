@@ -7,7 +7,7 @@ import config from '../config/config.json';
 export default function Track() {
     const [code, setCode] = useState(null);
     const [response, setResponse] = useState(null);
-    
+
     // ..envia os dados para o back-end
     async function sendForm() {
         let response = await fetch(`${config.urlRoot}/show-track`, {
@@ -27,12 +27,14 @@ export default function Track() {
     return (
         <View style={css.container}>
             <Image source={require('../assets/img/rastreio.png')} style={{ width: 320, height: 120 }} />
-            <TextInput onChangeText={text => setCode(text)} placeholder='Código do rastreio' style={[css.loginInp, css.trackInp]} />
-            <TouchableOpacity style={css.loginBtn} onPress={()=>sendForm()}>
-                <Text style={css.loginBtnTxt}>Rastrear</Text>
+            <TextInput onChangeText={text => setCode(text)} placeholder='Ex. XxXxxxXXXxxxX' style={[css.input, css.mB30, css.mT20]} />
+            <TouchableOpacity style={css.button} onPress={() => sendForm()}>
+                <Text style={css.buttonTxt}>Rastrear</Text>
             </TouchableOpacity>
 
-            <Text>{response}</Text>
+            <View style={[css.areaTrack]}>
+                <Text style={[css.textTrack]}>{response}</Text>
+            </View>
         </View>
     );
 }

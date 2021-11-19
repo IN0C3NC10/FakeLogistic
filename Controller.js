@@ -122,7 +122,7 @@ app.post('/show-track', async (req, res) => {
             res.send(JSON.stringify('Nenhum produto encontrado com este código.'));
         } else {
             // ..retorna apenas o nome do produto
-            res.send(JSON.stringify('Sua encomenda ' + response[0].Products[0].name + ', se encontra nas seguintes coordenadas ' + response[0].local + '.'));
+            res.send(JSON.stringify('Sua encomenda ' + response[0].Products[0].name + ', se encontra no seguinte local/coordenadas ' + response[0].local + '.'));
         }
     } catch (error) {
         res.send(JSON.stringify('Ocorreu um erro, tente novamente.'));

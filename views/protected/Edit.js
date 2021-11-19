@@ -46,6 +46,7 @@ export default function Edit({ navigation }) {
 
     // ..pesquisa o produto
     async function searchProduct(proId) {
+        setSearchCode(false);
         let response = await fetch(`${config.urlRoot}/show`, {
             method: "POST",
             headers: {
@@ -62,6 +63,7 @@ export default function Edit({ navigation }) {
 
     // ..envio do formulário
     async function sendForm() {
+        setSearchCode(false);
         let response = await fetch(`${config.urlRoot}/update`, {
             method: "POST",
             headers: {
@@ -90,6 +92,15 @@ export default function Edit({ navigation }) {
         setCode('');
         setProduct('');
         setLocalization('');
+        setSearchCode(false);
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+        })();
+        getLocation();
     }
 
     // ..leitura manual
@@ -99,7 +110,7 @@ export default function Edit({ navigation }) {
 
     return (
         <View style={[css.container, css.containerTop]}>
-            <MenuRestricted title='Edição' navigation={navigation} />
+            <MenuRestricted title='Atualização' navigation={navigation} />
             {
                 scanned == true ?
                     <BarCodeScanner
@@ -109,33 +120,34 @@ export default function Edit({ navigation }) {
                     :
                     <View style={css.qrForm}>
                         <Text>{response}</Text>
-                        <View style={css.loginInp}>
-                            <TextInput value={product} placeholder='Nome do produto' onChangeText={text => setProduct(text)} />
+                        <View >
+                            <TextInput style={[css.input, css.mH40, css.mT20]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
                         </View>
-                        <View style={css.loginInp}>
-                            <TextInput value={localization} placeholder='Localização do produto' onChangeText={text => setLocalization(text)} />
+                        <View >
+                            <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
                         </View>
-                        <TouchableOpacity style={css.loginBtn} onPress={() => sendForm()}>
-                            <Text>Cadastrar</Text>
+                        <TouchableOpacity style={css.button} onPress={() => sendForm()}>
+                            <Text style={css.buttonTxt}>Salvar</Text>
                         </TouchableOpacity>
-                        <View>
-                            <Button title='Escanear Novamente' onPress={() => readAgain()} />
-                        </View>
-                        <View>
-                            <Button title='Escanear Manualmente' onPress={() => readCode()} />
+                        <View style={[css.fDR, css.jCC, css.mT20]}>
+                            <TouchableOpacity style={[css.btnSimple, css.mR10]} onPress={() => readAgain()} >
+                                <Text style={css.btnSimpleTxt}>Ler Novamente</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[css.btnSimple, css.mL10]} onPress={() => readCode()} >
+                                <Text style={css.btnSimpleTxt}>Digitar Código</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
             }
 
             {
                 searchCode == true ?
-                    <View style={css.qrForm}>
-                        <Text>Pesquise pelo código</Text>
-                        <View style={css.loginInp}>
-                            <TextInput value={code} placeholder='Código do produto' onChangeText={text => setCode(text)} />
+                    <View style={[css.qrForm, css.jCC, css.mT20]}>
+                        <View style={[css.mT20]}>
+                            <TextInput value={code} placeholder='Ex. XxXxxxXXXxxxX' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
                         </View>
-                        <TouchableOpacity style={css.loginBtn} onPress={() => searchProduct(code)}>
-                            <Text>Buscar</Text>
+                        <TouchableOpacity style={css.button} onPress={() => searchProduct(code)}>
+                            <Text style={css.buttonTxt}>Buscar</Text>
                         </TouchableOpacity>
                     </View>
                     :

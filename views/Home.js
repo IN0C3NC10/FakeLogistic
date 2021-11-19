@@ -8,8 +8,9 @@ export default function Home({navigation}){
         <View style={css.home}>
             <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
                 <MaterialCommunityIcons style={css.btnHome} name="account-box" />
+                
             </TouchableOpacity>
-
+            
             <TouchableOpacity onPress={()=>navigation.navigate('Track')}>
                 <MaterialCommunityIcons style={css.btnHome} name="map-search" />
             </TouchableOpacity>

@@ -49,7 +49,7 @@ export default function Login({ navigation }) {
     return (
         <KeyboardAvoidingView style={[css.container, css.darkBkg]} behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <View style={css.loginLogo}>
-                <Image source={require('../assets/icon.png')} style={{ width: 120, height: 120 }} />
+                <Image source={require('../assets/img/icon2.png')} style={{ width: 120, height: 120 }} />
             </View>
             {answer == 'error' ?
             <View>
@@ -59,10 +59,10 @@ export default function Login({ navigation }) {
             <View/>
             }
             <View style={css.loginForm}>
-                <TextInput style={css.loginInp} placeholder='Usuário' onChangeText={text => setUser(text)}></TextInput>
-                <TextInput style={css.loginInp} placeholder='Senha' onChangeText={text => setPassword(text)} secureTextEntry={true}></TextInput>
-                <TouchableOpacity style={css.loginBtn} onPress={()=>sendForm()}>
-                    <Text style={css.loginBtnTxt}>Entrar</Text>
+                <TextInput style={[css.input, css.mB15]} placeholder='Ex. alex' onChangeText={text => setUser(text)}></TextInput>
+                <TextInput style={[css.input, css.mB15]} placeholder='******' onChangeText={text => setPassword(text)} secureTextEntry={true}></TextInput>
+                <TouchableOpacity style={css.button} onPress={()=>sendForm()}>
+                    <Text style={css.buttonTxt}>Entrar</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>

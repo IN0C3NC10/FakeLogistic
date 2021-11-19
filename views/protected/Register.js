@@ -8,7 +8,7 @@ import config from '../../config/config.json';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
 
-export default function Register({navigation}) {
+export default function Register({ navigation }) {
     const address = config.origin;
     const [code, setCode] = useState(null);
     const [idUser, setIdUser] = useState(null);
@@ -28,8 +28,8 @@ export default function Register({navigation}) {
     // ..gerar um código random
     async function randomCode() {
         let result = '';
-        let length=20;
-        let chars='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        let length = 20;
+        let chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)]
         setCode(result);
     }
@@ -43,13 +43,13 @@ export default function Register({navigation}) {
 
     // ..envia o formulario
     async function sendForm() {
-        let response = await fetch(`${config.urlRoot}/store`,{
-            method:"POST",
-            body:JSON.stringify({
-                id:idUser,
-                code:code,
-                product:product,
-                address:address,
+        let response = await fetch(`${config.urlRoot}/store`, {
+            method: "POST",
+            body: JSON.stringify({
+                id: idUser,
+                code: code,
+                product: product,
+                address: address,
             }),
             headers: {
                 Accept: 'application/json',
@@ -62,11 +62,11 @@ export default function Register({navigation}) {
 
     // ..compartilha o QRCode
     async function shareQR() {
-        const image = config.urlRoot+'/assets/img/code.png';
+        const image = config.urlRoot + '/assets/img/code.png';
         FileSystem.downloadAsync(
             image,
-            FileSystem.documentDirectory+'code.png'
-        ).then(({uri})=>{
+            FileSystem.documentDirectory + 'code.png'
+        ).then(({ uri }) => {
             Sharing.shareAsync(uri);
         });
         await Sharing.shareAsync();
@@ -78,16 +78,18 @@ export default function Register({navigation}) {
             {
                 response && (
                     <View>
-                        <Image source={{ uri:response, height:180, width:180 }}/>
-                        <Button title='Compartilhar' onPress={()=>shareQR()} />
+                        <Image source={{ uri: response, height: 180, width: 180 }} />
+                        <TouchableOpacity style={css.btnSimple} onPress={() => shareQR()}>
+                            <Text style={css.btnSimpleTxt}>Compartilhar</Text>
+                        </TouchableOpacity>
                     </View>
                 )
             }
-            <View style={css.loginInp}>
-                <TextInput value={product} placeholder='Nome do produto' onChangeText={text=>setProduct(text)}/>
+            <View>
+                <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} style={[css.input, css.mB30, css.mT20]} />
             </View>
-            <TouchableOpacity style={css.loginBtn} onPress={()=>sendForm()}>
-                <Text>Cadastrar</Text>
+            <TouchableOpacity style={css.button} onPress={() => sendForm()}>
+                <Text style={css.buttonTxt}>Cadastrar</Text>
             </TouchableOpacity>
         </View>
     );

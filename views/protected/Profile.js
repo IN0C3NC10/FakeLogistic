@@ -50,12 +50,12 @@ export default function Profile({ navigation }) {
 
             <View>
                 <Text>{msg}</Text>
-                <TextInput placeholder='Senha Antiga:' onChangeText={text=>setOldPass(text)}/>
-                <TextInput placeholder='Nova Senha:' onChangeText={text=>setNewPass(text)}/>
-                <TextInput placeholder='Confirmação de Senha:' onChangeText={text=>setConfNewPass(text)}/>
+                <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text=>setOldPass(text)}/>
+                <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text=>setNewPass(text)}/>
+                <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text=>setConfNewPass(text)}/>
 
-                <TouchableOpacity onPress={()=>sendForm()}>
-                    <Text>Alterar</Text>
+                <TouchableOpacity onPress={()=>sendForm()} style={css.button}>
+                    <Text style={css.buttonTxt}>Alterar</Text>
                 </TouchableOpacity>
             </View>
         </View>

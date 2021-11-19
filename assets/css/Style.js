@@ -5,7 +5,7 @@ let light = "#fff";
 let main = "#004aad";
 const css = StyleSheet.create({
     darkBkg: {
-        backgroundColor: shadow,
+        backgroundColor: "black",
     },
     container: {
         flex: 1,
@@ -16,6 +16,7 @@ const css = StyleSheet.create({
     containerTop: {
         justifyContent: 'flex-start',
     },
+
     home: {
         flex: 1,
         flexDirection: 'row',
@@ -23,6 +24,91 @@ const css = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
+    menuHome: {
+        fontSize: 20,
+        color: shadow,
+    },
+
+    input: {
+        backgroundColor: light,
+        fontSize: 19,
+        padding: 7,
+        borderColor: '#ccc',
+        borderBottomWidth: 1,
+        paddingHorizontal: 20,
+        textAlign: "center",
+    },
+
+    button: {
+        padding: 12,
+        backgroundColor: main,
+        alignSelf: "center",
+        borderRadius: 5,
+    },
+    buttonTxt: {
+        fontWeight: 'bold',
+        fontSize: 22,
+        color: light,
+    },
+
+    btnSimple: {
+        padding: 6,
+        backgroundColor: main,
+        alignSelf: "center",
+        borderRadius: 5,
+    }, btnSimpleTxt: {
+        fontWeight: 'bold',
+        fontSize: 12,
+        color: light,
+    },
+
+    areaTrack:{
+        padding:40,
+        justifyContent:"center",
+    },
+    textTrack:{
+        textAlign:"center",
+        fontSize:15,
+        marginHorizontal:10,
+        marginTop:20,
+    },
+
+    // ..helpers
+    bold:{
+        fontWeight:"bold",
+    },
+    mB15: {
+        marginBottom: 15,
+    },
+    mB30: {
+        marginBottom: 30,
+    },
+    mT20: {
+        marginTop: 20,
+    },
+    mL10: {
+        marginLeft: 10,
+    },
+    mR10: {
+        marginRight: 10,
+    },
+    mH20: {
+        marginHorizontal: 20,
+    },
+    mH40: {
+        marginHorizontal: 40,
+    },
+    fDR: {
+        flexDirection: "row",
+    },
+    jCC: {
+        justifyContent: "center",
+    },
+    tAC: {
+        textAlign: "center",
+    },
+    // ..helpers
 
     btnHome: {
         fontSize: 100,
@@ -42,23 +128,6 @@ const css = StyleSheet.create({
         color: 'red',
         marginVertical: 10,
     },
-    loginInp: {
-        backgroundColor: light,
-        fontSize: 19,
-        padding: 7,
-        marginBottom: 15,
-    },
-    loginBtn: {
-        padding: 12,
-        backgroundColor: main,
-        alignSelf: "center",
-        borderRadius: 5,
-    },
-    loginBtnTxt: {
-        fontWeight: 'bold',
-        fontSize: 22,
-        color: light,
-    },
     areaTab: {
         backgroundColor: shadow,
         fontSize: 20,
@@ -68,9 +137,11 @@ const css = StyleSheet.create({
     // ..profile
     btnHome2: {
         textAlign: "left",
+        marginLeft: 15,
     },
     btnLogout: {
         textAlign: "right",
+        marginRight: 15,
     },
     areaMenu: {
         flexDirection: "row",
@@ -86,25 +157,17 @@ const css = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
         color: light,
-        textAlign: "center"
+        textAlign: "center",
     },
     // ..edit
-    qrCode:{
-        width:'100%',
-        height:'100%',
-        backgroundColor:shadow,
-        justifyContent:'center',
+    qrCode: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: shadow,
+        justifyContent: 'center',
     },
-    qrForm:{
-        width:'100%',
-    },
-    // ..track page
-    trackInp:{
-        marginTop:20,
-        marginBottom:30,
-        borderColor:'#ccc',
-        borderBottomWidth:1,
-        paddingHorizontal:20,
+    qrForm: {
+        width: '100%',
     },
 });
 

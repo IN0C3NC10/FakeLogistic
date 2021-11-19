@@ -57,23 +57,12 @@ export default function Restricted({ navigation }) {
                 activeBackgroundColor: '#000',
                 inactiveBackgroundColor: '#333',
                 style: {
-                    fontWeight:'bold',
+                    fontWeight: 'bold',
                     backgroundColor: '#333',
                     paddingBottom: 3
                 }
             }}
         >
-            <Tab.Screen
-                name="Profile"
-                component={Profile}
-                options={{
-                    title: 'Perfil',
-                    headerShown: false,
-                    tabBarIcon: () => (
-                        <FontAwesome name="user" size={20} color="white" />
-                    )
-                }}
-            />
             <Tab.Screen
                 name="Register"
                 component={Register}
@@ -89,10 +78,21 @@ export default function Restricted({ navigation }) {
                 name="Edit"
                 component={Edit}
                 options={{
-                    title: 'Editar',
+                    title: 'Atualizar',
                     headerShown: false,
                     tabBarIcon: () => (
                         <FontAwesome name="pencil-square" size={20} color="white" />
+                    )
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={Profile}
+                options={{
+                    title: 'Perfil',
+                    headerShown: false,
+                    tabBarIcon: () => (
+                        <FontAwesome name="user" size={20} color="white" />
                     )
                 }}
             />
