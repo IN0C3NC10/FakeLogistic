@@ -96,8 +96,8 @@ app.post('/show', async (req, res) => {
             model: product,
         }],
     });
-
-    if (response === null) {
+    
+    if (JSON.stringify(response)==='[]') {
         res.send(JSON.stringify('error'));
     } else {
         // ..retorna apenas o nome do produto

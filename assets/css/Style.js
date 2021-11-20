@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import Login from "../../views/Login";
+
 let shadow = "#333";
 let light = "#fff";
 let main = "#004aad";
@@ -65,6 +65,16 @@ const css = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 12,
         color: light,
+    },
+
+    btnSquare: {
+        padding: 12,
+        backgroundColor: main,
+        alignSelf: "center",
+        textAlign:"center",
+        textTransform: "uppercase",
+        borderWidth:1,
+        borderColor: light,
     },
 
     error: {
@@ -170,7 +180,7 @@ const css = StyleSheet.create({
         paddingTop: 40,
         paddingBottom: 10,
         width: "100%",
-        backgroundColor: "#111",
+        backgroundColor: "#004aad",
         alignItems: "center",
         justifyContent: "center",
     },

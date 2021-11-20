@@ -53,8 +53,8 @@ export default function Restricted({ navigation }) {
             tabBarOptions={{
                 activeTintColor: '#fff',
                 inactiveTintColor: '#999',
-                activeBackgroundColor: '#000',
-                inactiveBackgroundColor: '#333',
+                activeBackgroundColor: '#004aad',
+                inactiveBackgroundColor: '#003b8a',
                 style: {
                     fontWeight: 'bold',
                     backgroundColor: '#333',

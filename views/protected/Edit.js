@@ -12,12 +12,12 @@ import { FontAwesome } from "@expo/vector-icons";
 export default function Edit({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [product, setProduct] = useState(null);
-    const [localization, setLocalization] = useState(null);
-    const [code, setCode] = useState(null);
+    const [product, setProduct] = useState('');
+    const [localization, setLocalization] = useState('');
+    const [code, setCode] = useState('');
     const [searchCode, setSearchCode] = useState(false);
-    const [response, setResponse] = useState(null);
-    const [error, setError] = useState(null);
+    const [response, setResponse] = useState('');
+    const [error, setError] = useState('');
 
     // ..pede a permissão para usar a câmera do usuário
     useEffect(() => {
@@ -26,6 +26,18 @@ export default function Edit({ navigation }) {
             setHasPermission(status === 'granted');
         })();
     }, []);
+
+    // ..são acionados apenas qdo os campos tiverem alterações
+    useEffect(() => {
+        setTimeout(() => {
+            setResponse('');
+        }, 3000);
+    }, [response]);
+    useEffect(() => {
+        setTimeout(() => {
+            setError('');
+        }, 3000);
+    }, [error]);
 
     // ..leitura do código QR
     async function handleBarCodeScanned({ type, data }) {
@@ -54,47 +66,57 @@ export default function Edit({ navigation }) {
 
     // ..pesquisa o produto
     async function searchProduct(proId) {
-        setSearchCode(false);
-        let response = await fetch(`${config.urlRoot}/show`, {
-            method: "POST",
-            headers: {
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                code: proId,
-            }),
-        });
-        let json = await response.json();
-        setProduct(json[0].Products[0].name);
-        if (localization == null || localization == '') {
-            setLocalization(json[0].local);
+        if (code != '') {
+            setSearchCode(false);
+            let response = await fetch(`${config.urlRoot}/show`, {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: proId,
+                }),
+            });
+            let json = await response.json();
+            if (json != '{}' && json != '[]' && json != 'error') {
+                setProduct(json[0].Products[0].name);
+                if (localization == null || localization == '') {
+                    setLocalization(json[0].local);
+                }
+            } else {
+                setError('Código especificado NÃO encontrado!');
+            }
+        } else {
+            setError('Código vazio! Escaneie o QRCode ou Pesquise-o!');
         }
     };
 
     // ..envio do formulário
     async function sendForm() {
-        resetFields();
-        let response = await fetch(`${config.urlRoot}/update`, {
-            method: "POST",
-            headers: {
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                code: code,
-                product: product,
-                local: localization,
-            }),
-        });
-        let json = await response.json();
-        setResponse(json);
+        if (validate()) {
+            resetFields();
+            let response = await fetch(`${config.urlRoot}/update`, {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: code,
+                    product: product,
+                    local: localization,
+                }),
+            });
+            let json = await response.json();
+            setResponse(json);
+        }
     }
 
-    // ..envio do formulário
+    // ..deleta o produto e seu rastreio (entregue)
     async function delivered() {
-        resetFields();
-        if (code != null) {
+        if (validate()) {
+            resetFields();
             let response = await fetch(`${config.urlRoot}/delete`, {
                 method: "POST",
                 headers: {
@@ -107,10 +129,7 @@ export default function Edit({ navigation }) {
             });
             let json = await response.json();
             setResponse(json);
-        } else {
-            setError('Código vazio!');
         }
-
     }
 
     // ..nova leitura do QRCode
@@ -143,6 +162,21 @@ export default function Edit({ navigation }) {
         setSearchCode(false);
     }
 
+    function validate() {
+        if (code == '') {
+            setError('Código vazio! Escaneie o QRCode ou Pesquise-o!');
+            return false;
+        } else if (product == '') {
+            setError('Produto vazio! Escaneie o QRCode ou Pesquise-o!');
+            return false;
+        } else if (localization == '') {
+            setError('Local vazio! Pegue o seu local ou mantenha o anterior!');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuRestricted title='Atualização' navigation={navigation} />
@@ -162,17 +196,17 @@ export default function Edit({ navigation }) {
                         <View >
                             <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
                         </View>
-                        <TouchableOpacity style={[css.col4,css.button]} onPress={() => sendForm()}>
-                        <FontAwesome name="floppy-o" size={20} color="white" />
-                        </TouchableOpacity>
-                        <View style={[css.fDR, css.jCC, css.mT20]}>
-                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mL10]} onPress={() => readCode()} >
+                        <View style={[css.fDR, css.jCC, css.mT20, css.mB15]}>
+                            <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => sendForm()}>
+                                <FontAwesome name="floppy-o" size={20} color="white" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => readCode()} >
                                 <FontAwesome name="code" size={20} color="white" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mL10, css.mR10]} onPress={() => delivered()} >
+                            <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => delivered()} >
                                 <FontAwesome name="map-marker" size={20} color="white" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mR10]} onPress={() => readAgain()} >
+                            <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => readAgain()} >
                                 <FontAwesome name="refresh" size={20} color="white" />
                             </TouchableOpacity>
                         </View>
@@ -185,8 +219,8 @@ export default function Edit({ navigation }) {
                         <View style={[css.mT20]}>
                             <TextInput value={code} placeholder='Ex. XxXxxxXXXxxxX' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
                         </View>
-                        <TouchableOpacity style={[css.col4,css.button]} onPress={() => searchProduct(code)}>
-                        <FontAwesome name="search" size={20} color="white" />
+                        <TouchableOpacity style={[css.col4, css.button]} onPress={() => searchProduct(code)}>
+                            <FontAwesome name="search" size={20} color="white" />
                         </TouchableOpacity>
                     </View>
                     :
