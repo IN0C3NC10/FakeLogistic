@@ -53,7 +53,7 @@ export default function Login({ navigation }) {
             </View>
             {answer == 'error' ?
             <View>
-                <Text style={css.loginMsg}>Usuário ou senha incorreta!</Text>
+                <Text style={css.error}>Usuário ou senha incorreta!</Text>
             </View>
             :
             <View/>

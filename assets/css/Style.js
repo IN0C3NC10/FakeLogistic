@@ -44,7 +44,9 @@ const css = StyleSheet.create({
         padding: 12,
         backgroundColor: main,
         alignSelf: "center",
+        textAlign:"center",
         borderRadius: 5,
+        textTransform: "uppercase",
     },
     buttonTxt: {
         fontWeight: 'bold',
@@ -57,26 +59,51 @@ const css = StyleSheet.create({
         backgroundColor: main,
         alignSelf: "center",
         borderRadius: 5,
+        textAlign: "center",
+        textTransform: "uppercase",
     }, btnSimpleTxt: {
         fontWeight: 'bold',
         fontSize: 12,
         color: light,
     },
 
-    areaTrack:{
-        padding:40,
-        justifyContent:"center",
+    error: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'red',
+        marginVertical: 10,
     },
-    textTrack:{
-        textAlign:"center",
-        fontSize:15,
-        marginHorizontal:10,
-        marginTop:20,
+
+    note: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: '#a6a6a6',
+        marginVertical: 10,
+    },
+
+    areaTrack: {
+        padding: 40,
+        justifyContent: "center",
+    },
+    textTrack: {
+        textAlign: "center",
+        fontSize: 15,
+        marginHorizontal: 10,
+        marginTop: 20,
     },
 
     // ..helpers
-    bold:{
-        fontWeight:"bold",
+    col12: {
+        width: "100%"
+    },
+    col6: {
+        width: "50%",
+    },
+    col4: {
+        width: "25%",
+    },
+    bold: {
+        fontWeight: "bold",
     },
     mB15: {
         marginBottom: 15,
@@ -122,12 +149,7 @@ const css = StyleSheet.create({
     loginForm: {
         width: '80%',
     },
-    loginMsg: {
-        fontWeight: 'bold',
-        fontSize: 15,
-        color: 'red',
-        marginVertical: 10,
-    },
+
     areaTab: {
         backgroundColor: shadow,
         fontSize: 20,

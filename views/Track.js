@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { css } from '../assets/css/Style'
 import config from '../config/config.json';
+import { FontAwesome } from "@expo/vector-icons"
 
 export default function Track() {
     const [code, setCode] = useState(null);
@@ -28,8 +29,8 @@ export default function Track() {
         <View style={css.container}>
             <Image source={require('../assets/img/rastreio.png')} style={{ width: 320, height: 120 }} />
             <TextInput onChangeText={text => setCode(text)} placeholder='Ex. XxXxxxXXXxxxX' style={[css.input, css.mB30, css.mT20]} />
-            <TouchableOpacity style={css.button} onPress={() => sendForm()}>
-                <Text style={css.buttonTxt}>Rastrear</Text>
+            <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>
+                <FontAwesome name="search" size={20} color="white" />
             </TouchableOpacity>
 
             <View style={[css.areaTrack]}>

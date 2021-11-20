@@ -7,6 +7,7 @@ import { css } from '../../assets/css/Style';
 import config from '../../config/config.json';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Register({ navigation }) {
     const address = config.origin;
@@ -79,8 +80,8 @@ export default function Register({ navigation }) {
                 response && (
                     <View>
                         <Image source={{ uri: response, height: 180, width: 180 }} />
-                        <TouchableOpacity style={css.btnSimple} onPress={() => shareQR()}>
-                            <Text style={css.btnSimpleTxt}>Compartilhar</Text>
+                        <TouchableOpacity style={[css.col4,css.btnSimple]} onPress={() => shareQR()}>
+                            <FontAwesome name="share-alt" size={15} color="white" />
                         </TouchableOpacity>
                     </View>
                 )
@@ -88,8 +89,8 @@ export default function Register({ navigation }) {
             <View>
                 <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} style={[css.input, css.mB30, css.mT20]} />
             </View>
-            <TouchableOpacity style={css.button} onPress={() => sendForm()}>
-                <Text style={css.buttonTxt}>Cadastrar</Text>
+            <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>
+                <FontAwesome name="floppy-o" size={20} color="white" />
             </TouchableOpacity>
         </View>
     );

@@ -101,7 +101,7 @@ app.post('/show', async (req, res) => {
         res.send(JSON.stringify('error'));
     } else {
         // ..retorna apenas o nome do produto
-        res.send(JSON.stringify(response[0].Products[0].name));
+        res.send(JSON.stringify(response));
     }
 });
 
@@ -146,7 +146,23 @@ app.post('/update', async (req, res) => {
     response[0].Products[0].save();
 
     res.send(JSON.stringify('Dados atualizados!'));
+});
 
+// ..mostra os dados de um produto
+app.post('/delete', async (req, res) => {
+    // ..deleta os dados
+    let response = await tracking.destroy({
+        where: {
+            code: req.body.code,
+        },
+        include: [{ model: product }],
+    });
+    if (response==0) {
+        res.send(JSON.stringify('Não existe produto com este Código!'));    
+    }else{
+        res.send(JSON.stringify('Produto deletado com sucesso!'));    
+    }
+    
 });
 //................................................................
 // ..ROTAS

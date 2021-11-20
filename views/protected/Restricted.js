@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile, Register, Edit } from '../_index'
-import { css } from '../../assets/css/Style';
 import { FontAwesome } from "@expo/vector-icons"
 
 export default function Restricted({ navigation }) {

@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Button, Alert } from 'react-native';
 import MenuRestricted from '../../assets/components/menuRestricted';
 import { useState, useEffect } from 'react';
 import { css } from '../../assets/css/Style';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import config from '../../config/config.json';
 import * as Location from 'expo-location';
+import { FontAwesome } from "@expo/vector-icons";
 
 
 export default function Edit({ navigation }) {
@@ -16,6 +17,7 @@ export default function Edit({ navigation }) {
     const [code, setCode] = useState(null);
     const [searchCode, setSearchCode] = useState(false);
     const [response, setResponse] = useState(null);
+    const [error, setError] = useState(null);
 
     // ..pede a permissão para usar a câmera do usuário
     useEffect(() => {
@@ -37,12 +39,18 @@ export default function Edit({ navigation }) {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+                setError('Permission to access location was denied');
                 return;
             }
         })();
         getLocation();
     }, []);
+
+    // ..função que retorna as coordenadas do usuário
+    async function getLocation() {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocalization(`${location.coords.latitude}, ${location.coords.longitude}`);
+    }
 
     // ..pesquisa o produto
     async function searchProduct(proId) {
@@ -58,12 +66,15 @@ export default function Edit({ navigation }) {
             }),
         });
         let json = await response.json();
-        setProduct(json);
+        setProduct(json[0].Products[0].name);
+        if (localization == null || localization == '') {
+            setLocalization(json[0].local);
+        }
     };
 
     // ..envio do formulário
     async function sendForm() {
-        setSearchCode(false);
+        resetFields();
         let response = await fetch(`${config.urlRoot}/update`, {
             method: "POST",
             headers: {
@@ -80,23 +91,36 @@ export default function Edit({ navigation }) {
         setResponse(json);
     }
 
-    // ..função que retorna as coordenadas do usuário
-    async function getLocation() {
-        let location = await Location.getCurrentPositionAsync({});
-        setLocalization(`${location.coords.latitude}, ${location.coords.longitude}`);
+    // ..envio do formulário
+    async function delivered() {
+        resetFields();
+        if (code != null) {
+            let response = await fetch(`${config.urlRoot}/delete`, {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: code,
+                }),
+            });
+            let json = await response.json();
+            setResponse(json);
+        } else {
+            setError('Código vazio!');
+        }
+
     }
 
     // ..nova leitura do QRCode
     async function readAgain() {
-        // setScanned(false);
-        setCode('');
-        setProduct('');
-        setLocalization('');
-        setSearchCode(false);
+        resetFields();
+        setError('');
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setErrorMsg('Permission to access location was denied');
+                setError('Permission to access location was denied');
                 return;
             }
         })();
@@ -105,7 +129,18 @@ export default function Edit({ navigation }) {
 
     // ..leitura manual
     async function readCode() {
-        setSearchCode(true);
+        if (searchCode == true) {
+            setSearchCode(false);
+        } else {
+            setSearchCode(true);
+        }
+    }
+
+    function resetFields() {
+        setCode('');
+        setProduct('');
+        setLocalization('');
+        setSearchCode(false);
     }
 
     return (
@@ -119,22 +154,26 @@ export default function Edit({ navigation }) {
                     />
                     :
                     <View style={css.qrForm}>
-                        <Text>{response}</Text>
+                        <Text style={[css.error, css.tAC]}>{error}</Text>
+                        <Text style={[css.note, css.tAC]}>{response}</Text>
                         <View >
                             <TextInput style={[css.input, css.mH40, css.mT20]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
                         </View>
                         <View >
                             <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
                         </View>
-                        <TouchableOpacity style={css.button} onPress={() => sendForm()}>
-                            <Text style={css.buttonTxt}>Salvar</Text>
+                        <TouchableOpacity style={[css.col4,css.button]} onPress={() => sendForm()}>
+                        <FontAwesome name="floppy-o" size={20} color="white" />
                         </TouchableOpacity>
                         <View style={[css.fDR, css.jCC, css.mT20]}>
-                            <TouchableOpacity style={[css.btnSimple, css.mR10]} onPress={() => readAgain()} >
-                                <Text style={css.btnSimpleTxt}>Ler Novamente</Text>
+                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mL10]} onPress={() => readCode()} >
+                                <FontAwesome name="code" size={20} color="white" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={[css.btnSimple, css.mL10]} onPress={() => readCode()} >
-                                <Text style={css.btnSimpleTxt}>Digitar Código</Text>
+                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mL10, css.mR10]} onPress={() => delivered()} >
+                                <FontAwesome name="map-marker" size={20} color="white" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[css.col4,css.btnSimple, css.mR10]} onPress={() => readAgain()} >
+                                <FontAwesome name="refresh" size={20} color="white" />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -146,8 +185,8 @@ export default function Edit({ navigation }) {
                         <View style={[css.mT20]}>
                             <TextInput value={code} placeholder='Ex. XxXxxxXXXxxxX' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
                         </View>
-                        <TouchableOpacity style={css.button} onPress={() => searchProduct(code)}>
-                            <Text style={css.buttonTxt}>Buscar</Text>
+                        <TouchableOpacity style={[css.col4,css.button]} onPress={() => searchProduct(code)}>
+                        <FontAwesome name="search" size={20} color="white" />
                         </TouchableOpacity>
                     </View>
                     :

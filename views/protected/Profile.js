@@ -17,7 +17,7 @@ export default function Profile({ navigation }) {
 
     useEffect(() => {
         // ..recupera o id do usuario salvo no AsyncStorage
-        async function getUserId(){
+        async function getUserId() {
             let response = await AsyncStorage.getItem('userData');
             let json = JSON.parse(response);
             setIdUser(json.id);
@@ -26,10 +26,10 @@ export default function Profile({ navigation }) {
     }, []);
 
     async function sendForm() {
-        let response = await fetch(`${config.urlRoot}/verifyPass`,{
-            method:"POST",
-            body:JSON.stringify({
-                id:idUser,
+        let response = await fetch(`${config.urlRoot}/verifyPass`, {
+            method: "POST",
+            body: JSON.stringify({
+                id: idUser,
                 oldPass: oldPass,
                 newPass: newPass,
                 confNewPass: confNewPass,
@@ -50,12 +50,12 @@ export default function Profile({ navigation }) {
 
             <View>
                 <Text>{msg}</Text>
-                <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text=>setOldPass(text)}/>
-                <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text=>setNewPass(text)}/>
-                <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text=>setConfNewPass(text)}/>
+                <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text => setOldPass(text)} />
+                <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text => setNewPass(text)} />
+                <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text => setConfNewPass(text)} />
 
-                <TouchableOpacity onPress={()=>sendForm()} style={css.button}>
-                    <Text style={css.buttonTxt}>Alterar</Text>
+                <TouchableOpacity onPress={() => sendForm()} style={[css.col4, css.button]}>
+                    <FontAwesome name="floppy-o" size={20} color="white" />
                 </TouchableOpacity>
             </View>
         </View>
