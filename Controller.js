@@ -46,7 +46,7 @@ app.post('/verifyPass', async (req, res) => {
     })
     // ..recebe se a senha existe
     if (response === null) {
-        res.send(JSON.stringify('Senha inválida!'));
+        res.send(JSON.stringify('invalid'));
     } else {
         // ..se existir, verifica se as 2 novas batem
         if (req.body.newPass === req.body.confNewPass) {

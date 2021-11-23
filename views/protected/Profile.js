@@ -9,11 +9,12 @@ import MenuRestricted from '../../assets/components/menuRestricted';
 import config from '../../config/config.json';
 
 export default function Profile({ navigation }) {
-    const [idUser, setIdUser] = useState(null);
-    const [oldPass, setOldPass] = useState(null);
-    const [newPass, setNewPass] = useState(null);
-    const [confNewPass, setConfNewPass] = useState(null);
-    const [msg, setMsg] = useState(null);
+    const [idUser, setIdUser] = useState('');
+    const [oldPass, setOldPass] = useState('');
+    const [newPass, setNewPass] = useState('');
+    const [confNewPass, setConfNewPass] = useState('');
+    const [response, setResponse] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         // ..recupera o id do usuario salvo no AsyncStorage
@@ -25,22 +26,64 @@ export default function Profile({ navigation }) {
         getUserId();
     }, []);
 
+    // ..são acionados apenas qdo os campos tiverem alterações
+    useEffect(() => {
+        setTimeout(() => {
+            setResponse('');
+        }, 3000);
+    }, [response]);
+    useEffect(() => {
+        setTimeout(() => {
+            setError('');
+        }, 3000);
+    }, [error]);
+
+    // ..função para o envio do formulário
     async function sendForm() {
-        let response = await fetch(`${config.urlRoot}/verifyPass`, {
-            method: "POST",
-            body: JSON.stringify({
-                id: idUser,
-                oldPass: oldPass,
-                newPass: newPass,
-                confNewPass: confNewPass,
-            }),
-            headers: {
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-        });
-        let json = await response.json();
-        setMsg(json);
+        if (validate()) {
+            resetFields();
+            let response = await fetch(`${config.urlRoot}/verifyPass`, {
+                method: "POST",
+                body: JSON.stringify({
+                    id: idUser,
+                    oldPass: oldPass,
+                    newPass: newPass,
+                    confNewPass: confNewPass,
+                }),
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+            });
+            let json = await response.json();
+            if (json != 'invalid') {
+                setResponse(json);
+            } else {
+                setError('Senha Inválida');
+            }
+        }
+    }
+
+    // ..funções de usabilidade
+    function resetFields() {
+        setOldPass('');
+        setNewPass('');
+        setConfNewPass('');
+    }
+
+    function validate() {
+        if (oldPass == '') {
+            setError('Senha anterior, vazia!');
+            return false;
+        } else if (newPass == '') {
+            setError('Nova senha, vazia!');
+            return false;
+        } else if (confNewPass == '') {
+            setError('Confirmação de senha, vazia!');
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -49,7 +92,8 @@ export default function Profile({ navigation }) {
             <MenuRestricted title='Perfil' navigation={navigation} />
 
             <View>
-                <Text>{msg}</Text>
+                <Text style={[css.error, css.tAC]}>{error}</Text>
+                <Text style={[css.note, css.tAC]}>{response}</Text>
                 <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text => setOldPass(text)} />
                 <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text => setNewPass(text)} />
                 <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text => setConfNewPass(text)} />

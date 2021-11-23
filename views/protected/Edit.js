@@ -51,7 +51,7 @@ export default function Edit({ navigation }) {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setError('Permission to access location was denied');
+                setError('Permissão para acessar a localização negada!');
                 return;
             }
         })();
@@ -139,7 +139,7 @@ export default function Edit({ navigation }) {
         (async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                setError('Permission to access location was denied');
+                setError('Permissão de acesso negado!');
                 return;
             }
         })();
@@ -155,6 +155,7 @@ export default function Edit({ navigation }) {
         }
     }
 
+    // ..funções de usabilidade
     function resetFields() {
         setCode('');
         setProduct('');

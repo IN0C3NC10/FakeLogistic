@@ -13,8 +13,11 @@ export default function Register({ navigation }) {
     const address = config.origin;
     const [code, setCode] = useState(null);
     const [idUser, setIdUser] = useState(null);
-    const [product, setProduct] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [product, setProduct] = useState('');
+    const [response, setResponse] = useState('');
+    const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+
 
     useEffect(() => {
         getUser();
@@ -44,21 +47,25 @@ export default function Register({ navigation }) {
 
     // ..envia o formulario
     async function sendForm() {
-        let response = await fetch(`${config.urlRoot}/store`, {
-            method: "POST",
-            body: JSON.stringify({
-                id: idUser,
-                code: code,
-                product: product,
-                address: address,
-            }),
-            headers: {
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-        });
-        let json = await response.json();
-        setResponse(json);
+        if (validate()) {
+            resetFields();
+            let response = await fetch(`${config.urlRoot}/store`, {
+                method: "POST",
+                body: JSON.stringify({
+                    id: idUser,
+                    code: code,
+                    product: product,
+                    address: address,
+                }),
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+            });
+            let json = await response.json();
+            setResponse(json);
+            setMessage('Produto Cadastrado! Confira acima seu código de rastreio!')
+        }
     }
 
     // ..compartilha o QRCode
@@ -73,6 +80,32 @@ export default function Register({ navigation }) {
         await Sharing.shareAsync();
     }
 
+    // ..são acionados apenas qdo os campos tiverem alterações
+    useEffect(() => {
+        setTimeout(() => {
+            setMessage('');
+        }, 10000);
+    }, [message]);
+    useEffect(() => {
+        setTimeout(() => {
+            setError('');
+        }, 3000);
+    }, [error]);
+
+    // ..funções de usabilidade
+    function resetFields() {
+        setProduct('');
+    }
+
+    function validate() {
+        if (product == '') {
+            setError('Nome do produto, vazio!');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuRestricted title='Cadastro' navigation={navigation} />
@@ -80,14 +113,16 @@ export default function Register({ navigation }) {
                 response && (
                     <View>
                         <Image source={{ uri: response, height: 180, width: 180 }} />
-                        <TouchableOpacity style={[css.col4,css.btnSimple]} onPress={() => shareQR()}>
+                        <TouchableOpacity style={[css.col4, css.btnSimple]} onPress={() => shareQR()}>
                             <FontAwesome name="share-alt" size={15} color="white" />
                         </TouchableOpacity>
                     </View>
                 )
             }
             <View>
-                <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} style={[css.input, css.mB30, css.mT20]} />
+                <Text style={[css.error, css.tAC]}>{error}</Text>
+                <Text style={[css.note, css.tAC]}>{message}</Text>
+                <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} onFocus={response => setResponse(null)} style={[css.input, css.mB30, css.mT20]} />
             </View>
             <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>
                 <FontAwesome name="floppy-o" size={20} color="white" />
