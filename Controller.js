@@ -76,6 +76,7 @@ app.post('/store', async (req, res) => {
 
     await product.create({
         trackingId: trackingId,
+        image: req.body.image,
         name: req.body.product,
     });
 
@@ -123,6 +124,7 @@ app.post('/show-track', async (req, res) => {
         } else {
             // ..retorna apenas o nome do produto
             // res.send(JSON.stringify('Sua encomenda ' + response[0].Products[0].name + ', se encontra no seguinte local/coordenadas ' + response[0].local + '.'));
+            console.log(response);
             res.send(JSON.stringify(response));
         }
     } catch (error) {
@@ -141,6 +143,7 @@ app.post('/update', async (req, res) => {
     // ..atualiza os dados
     response[0].local = req.body.local;
     response[0].updatedAt = new Date();
+    response[0].Products[0].image = req.body.image;
     response[0].Products[0].name = req.body.product;
     // ..de fato os salva
     response[0].save();

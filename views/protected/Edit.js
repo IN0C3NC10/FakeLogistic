@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Button, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
 import MenuRestricted from '../../assets/components/menuRestricted';
 import { useState, useEffect } from 'react';
 import { css } from '../../assets/css/Style';
@@ -12,6 +12,7 @@ import { FontAwesome } from "@expo/vector-icons";
 export default function Edit({ navigation }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
+    const [image, setImage] = useState('');
     const [product, setProduct] = useState('');
     const [localization, setLocalization] = useState('');
     const [code, setCode] = useState('');
@@ -80,6 +81,7 @@ export default function Edit({ navigation }) {
             });
             let json = await response.json();
             if (json != '{}' && json != '[]' && json != 'error') {
+                setImage(json[0].Products[0].image);
                 setProduct(json[0].Products[0].name);
                 if (localization == null || localization == '') {
                     setLocalization(json[0].local);
@@ -104,6 +106,7 @@ export default function Edit({ navigation }) {
                 },
                 body: JSON.stringify({
                     code: code,
+                    image:image,
                     product: product,
                     local: localization,
                 }),
@@ -160,6 +163,7 @@ export default function Edit({ navigation }) {
         setCode('');
         setProduct('');
         setLocalization('');
+        setImage('');
         setSearchCode(false);
     }
 
@@ -181,53 +185,62 @@ export default function Edit({ navigation }) {
     return (
         <View style={[css.container, css.containerTop]}>
             <MenuRestricted title='Atualização' navigation={navigation} />
-            {
-                scanned == true ?
-                    <BarCodeScanner
-                        onBarCodeScanned={scanned ? undefined : value => handleBarCodeScanned(value)}
-                        style={css.qrCode}
-                    />
-                    :
-                    <View style={css.qrForm}>
-                        <Text style={[css.error, css.tAC]}>{error}</Text>
-                        <Text style={[css.note, css.tAC]}>{response}</Text>
-                        <View >
-                            <TextInput style={[css.input, css.mH40, css.mT20]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
+            <ScrollView>
+                {
+                    scanned == true ?
+                        <BarCodeScanner
+                            onBarCodeScanned={scanned ? undefined : value => handleBarCodeScanned(value)}
+                            style={css.qrCode}
+                        />
+                        :
+                        <View style={css.qrForm}>
+                            <Text style={[css.error, css.tAC]}>{error}</Text>
+                            <Text style={[css.note, css.tAC]}>{response}</Text>
+                            <View style={[css.container]}>
+                                {
+                                    image && (
+                                        <Image style={[css.img, css.col6]} source={{ uri: image, }} style={{ width: 150, height: 120 }} />
+                                    )
+                                }
+                                <TextInput value={image} placeholder='Ex. www.google.com' onChangeText={text => setImage(text)} onFocus={response => setResponse(null)} style={[css.input, css.mH40]} />
+                            </View>
+                            <View >
+                                <TextInput style={[css.input, css.mH40, css.mT20]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
+                            </View>
+                            <View >
+                                <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
+                            </View>
+                            <View style={[css.fDR, css.jCC, css.mT20, css.mB15]}>
+                                <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => sendForm()}>
+                                    <FontAwesome name="floppy-o" size={20} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => readCode()} >
+                                    <FontAwesome name="code" size={20} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => delivered()} >
+                                    <FontAwesome name="map-marker" size={20} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => readAgain()} >
+                                    <FontAwesome name="refresh" size={20} color="white" />
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View >
-                            <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
-                        </View>
-                        <View style={[css.fDR, css.jCC, css.mT20, css.mB15]}>
-                            <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => sendForm()}>
-                                <FontAwesome name="floppy-o" size={20} color="white" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => readCode()} >
-                                <FontAwesome name="code" size={20} color="white" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => delivered()} >
-                                <FontAwesome name="map-marker" size={20} color="white" />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[css.col4, css.btnSquare,]} onPress={() => readAgain()} >
-                                <FontAwesome name="refresh" size={20} color="white" />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-            }
+                }
 
-            {
-                searchCode == true ?
-                    <View style={[css.qrForm, css.jCC, css.mT20]}>
-                        <View style={[css.mT20]}>
-                            <TextInput value={code} placeholder='Seu código aqui...' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
+                {
+                    searchCode == true ?
+                        <View style={[css.qrForm, css.jCC, css.mT20]}>
+                            <View style={[css.mT20]}>
+                                <TextInput value={code} placeholder='Seu código aqui...' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
+                            </View>
+                            <TouchableOpacity style={[css.col4, css.button]} onPress={() => searchProduct(code)}>
+                                <FontAwesome name="search" size={20} color="white" />
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={[css.col4, css.button]} onPress={() => searchProduct(code)}>
-                            <FontAwesome name="search" size={20} color="white" />
-                        </TouchableOpacity>
-                    </View>
-                    :
-                    <View />
-            }
-
+                        :
+                        <View />
+                }
+            </ScrollView>
         </View>
     );
 }

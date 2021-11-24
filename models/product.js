@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Product.init({
+    image: DataTypes.TEXT,
     name: DataTypes.STRING,
     trackingId: DataTypes.INTEGER
   }, {

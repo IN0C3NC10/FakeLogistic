@@ -14,6 +14,7 @@ export default function Register({ navigation }) {
     const [code, setCode] = useState(null);
     const [idUser, setIdUser] = useState(null);
     const [product, setProduct] = useState('');
+    const [image, setImage] = useState('');
     const [response, setResponse] = useState('');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
@@ -54,6 +55,7 @@ export default function Register({ navigation }) {
                 body: JSON.stringify({
                     id: idUser,
                     code: code,
+                    image: image,
                     product: product,
                     address: address,
                 }),
@@ -70,9 +72,9 @@ export default function Register({ navigation }) {
 
     // ..compartilha o QRCode
     async function shareQR() {
-        const image = config.urlRoot + '/assets/img/code.png';
+        const imageQR = config.urlRoot + '/assets/img/code.png';
         FileSystem.downloadAsync(
-            image,
+            imageQR,
             FileSystem.documentDirectory + 'code.png'
         ).then(({ uri }) => {
             Sharing.shareAsync(uri);
@@ -95,6 +97,7 @@ export default function Register({ navigation }) {
     // ..funções de usabilidade
     function resetFields() {
         setProduct('');
+        setImage('');
     }
 
     function validate() {
@@ -122,7 +125,8 @@ export default function Register({ navigation }) {
             <View>
                 <Text style={[css.error, css.tAC]}>{error}</Text>
                 <Text style={[css.note, css.tAC]}>{message}</Text>
-                <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} onFocus={response => setResponse(null)} style={[css.input, css.mB30, css.mT20]} />
+                <TextInput value={image} placeholder='Ex. www.google.com' onChangeText={text => setImage(text)} onFocus={response => setResponse(null)} style={[css.input, css.mT20]} />
+                <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} onFocus={response => setResponse(null)} style={[css.input, css.mB30,]} />
             </View>
             <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>
                 <FontAwesome name="floppy-o" size={20} color="white" />
