@@ -218,7 +218,7 @@ export default function Edit({ navigation }) {
                 searchCode == true ?
                     <View style={[css.qrForm, css.jCC, css.mT20]}>
                         <View style={[css.mT20]}>
-                            <TextInput value={code} placeholder='Ex. XxXxxxXXXxxxX' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
+                            <TextInput value={code} placeholder='Seu código aqui...' onChangeText={text => setCode(text)} style={[css.input, css.mB30, css.mH40]} />
                         </View>
                         <TouchableOpacity style={[css.col4, css.button]} onPress={() => searchProduct(code)}>
                             <FontAwesome name="search" size={20} color="white" />

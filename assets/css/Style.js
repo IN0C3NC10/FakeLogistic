@@ -44,7 +44,7 @@ const css = StyleSheet.create({
         padding: 12,
         backgroundColor: main,
         alignSelf: "center",
-        textAlign:"center",
+        textAlign: "center",
         borderRadius: 5,
         textTransform: "uppercase",
     },
@@ -71,9 +71,9 @@ const css = StyleSheet.create({
         padding: 12,
         backgroundColor: main,
         alignSelf: "center",
-        textAlign:"center",
+        textAlign: "center",
         textTransform: "uppercase",
-        borderWidth:1,
+        borderWidth: 1,
         borderColor: light,
     },
 
@@ -114,6 +114,9 @@ const css = StyleSheet.create({
     },
     bold: {
         fontWeight: "bold",
+    },
+    mainColor: {
+        color: main,
     },
     mB15: {
         marginBottom: 15,

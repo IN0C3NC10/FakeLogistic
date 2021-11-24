@@ -6,36 +6,77 @@ import config from '../config/config.json';
 import { FontAwesome } from "@expo/vector-icons"
 
 export default function Track() {
-    const [code, setCode] = useState(null);
-    const [response, setResponse] = useState(null);
+    const [code, setCode] = useState('');
+    const [error, setError] = useState('');
+    const [product, setProduct] = useState(null);
+    const [location, setLocation] = useState(null);
 
     // ..envia os dados para o back-end
     async function sendForm() {
-        let response = await fetch(`${config.urlRoot}/show-track`, {
-            method: "POST",
-            headers: {
-                Accept: 'application/json',
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                code: code,
-            }),
-        });
-        let json = await response.json();
-        setResponse(json);
+        if (validate()) {
+            resetFields();
+            let response = await fetch(`${config.urlRoot}/show-track`, {
+                method: "POST",
+                headers: {
+                    Accept: 'application/json',
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    code: code,
+                }),
+            });
+            let json = await response.json();
+            if (json == 'error' || json == 'invalid' || json != '{}' || json != '[]') {
+                setError('Código pesquisado inválido!')
+            } else {
+                setProduct(json[0].Products[0].name);
+                setLocation(json[0].local);
+            }
+        }
+    }
+
+    // ..são acionados apenas qdo os campos tiverem alterações
+    useEffect(() => {
+        setTimeout(() => {
+            setError('');
+        }, 10000);
+    }, [error]);
+
+
+    // ..funções de usabilidade
+    function resetFields() {
+        setCode('');
+    }
+
+    function validate() {
+        if (code == '') {
+            setError('Código vazio! Preencha com ele abaixo!');
+            return false;
+        } else {
+            return true;
+        }
     }
 
     return (
         <View style={css.container}>
             <Image source={require('../assets/img/rastreio.png')} style={{ width: 320, height: 120 }} />
-            <TextInput onChangeText={text => setCode(text)} placeholder='Ex. XxXxxxXXXxxxX' style={[css.input, css.mB30, css.mT20]} />
+            <Text style={[css.error, css.tAC]}>{error}</Text>
+            <TextInput value={code} onChangeText={text => setCode(text)} placeholder='Seu código aqui...' style={[css.input, css.mB30, css.mT20]} />
             <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>
                 <FontAwesome name="search" size={20} color="white" />
             </TouchableOpacity>
+            {
+                product ? (
+                    <View style={[css.areaTrack]}>
+                        <Text style={[css.textTrack]}>
+                            Sua encomenda <Text style={[css.bold, css.mainColor]}>{product}</Text>, se encontra no seguinte local/coordenadas <Text style={[css.bold, css.mainColor]}>{location}</Text>!
+                        </Text>
+                    </View>
+                ) : (
+                    <View />
+                )
+            }
 
-            <View style={[css.areaTrack]}>
-                <Text style={[css.textTrack]}>{response}</Text>
-            </View>
         </View>
     );
 }
