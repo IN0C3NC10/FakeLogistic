@@ -82,7 +82,7 @@ app.post('/store', async (req, res) => {
 
     QRCode.toDataURL(req.body.code).then(url => {
         // ..diretorio do arquivo
-        QRCode.toFile('./assets/img/code.png', req.body.code);
+        QRCode.toFile('./assets/img/qrcode/code.png', req.body.code);
         res.send(JSON.stringify(url));
     })
 });
