@@ -122,10 +122,12 @@ export default function Register({ navigation }) {
                     </View>
                 )
             }
-            <View>
+            <View >
                 <Text style={[css.error, css.tAC]}>{error}</Text>
                 <Text style={[css.note, css.tAC]}>{message}</Text>
-                <TextInput value={image} placeholder='Ex. www.google.com' onChangeText={text => setImage(text)} onFocus={response => setResponse(null)} style={[css.input, css.mT20]} />
+                <Text style={[css.label, css.mT20]}>Url da imagem</Text>
+                <TextInput value={image} placeholder='Ex. www.google.com' onChangeText={text => setImage(text)} onFocus={response => setResponse(null)} style={[css.input,]} />
+                <Text style={[css.label, css.mT20]}>Nome do produto*</Text>
                 <TextInput value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} onFocus={response => setResponse(null)} style={[css.input, css.mB30,]} />
             </View>
             <TouchableOpacity style={[css.col4, css.button]} onPress={() => sendForm()}>

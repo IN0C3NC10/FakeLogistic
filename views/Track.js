@@ -27,12 +27,12 @@ export default function Track() {
                 }),
             });
             let json = await response.json();
-            if (json == 'error' || json == 'invalid' || json == '{}' || json == '[]') {
-                setError('Código pesquisado inválido!')
-            } else {
+            if (json != 'error' && json != 'invalid') {
                 setImage(json[0].Products[0].image);
                 setProduct(json[0].Products[0].name);
                 setLocation(json[0].local);
+            } else {
+                setError('Código pesquisado inválido!')
             }
         }
     }

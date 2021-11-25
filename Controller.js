@@ -119,13 +119,14 @@ app.post('/show-track', async (req, res) => {
         });
 
         // ..retorna os dados para o fron-end em react
-        if (response == null) {
-            res.send(JSON.stringify('invalid'));
-        } else {
+        if (response != null && response[0].id>1) {
             // ..retorna apenas o nome do produto
             // res.send(JSON.stringify('Sua encomenda ' + response[0].Products[0].name + ', se encontra no seguinte local/coordenadas ' + response[0].local + '.'));
-            console.log(response);
+            // console.log(response[0].id);
             res.send(JSON.stringify(response));
+        } else {
+            // console.log(response[0].id);
+            res.send(JSON.stringify('invalid'));
         }
     } catch (error) {
         res.send(JSON.stringify('error'));

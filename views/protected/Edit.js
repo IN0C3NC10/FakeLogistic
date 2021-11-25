@@ -202,13 +202,16 @@ export default function Edit({ navigation }) {
                                         <Image style={[css.img, css.col6]} source={{ uri: image, }} style={{ width: 150, height: 120 }} />
                                     )
                                 }
+                                <Text style={[css.label,css.mH40,]}>Url da imagem</Text>
                                 <TextInput value={image} placeholder='Ex. www.google.com' onChangeText={text => setImage(text)} onFocus={response => setResponse(null)} style={[css.input, css.mH40]} />
                             </View>
                             <View >
-                                <TextInput style={[css.input, css.mH40, css.mT20]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
+                            <Text style={[css.label,css.mH40,css.mT20 ]}>Nome do produto*</Text>
+                                <TextInput style={[css.input, css.mH40,]} value={product} placeholder='Ex. Goiabinha' onChangeText={text => setProduct(text)} />
                             </View>
                             <View >
-                                <TextInput style={[css.input, css.mH40, css.mB30]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
+                            <Text style={[css.label,css.mH40,css.mT20]}>Local do produto*</Text>
+                                <TextInput style={[css.input, css.mH40,css.mB30 ]} value={localization} placeholder='Ex. Carapicuíba/SP' onChangeText={text => setLocalization(text)} />
                             </View>
                             <View style={[css.fDR, css.jCC, css.mT20, css.mB15]}>
                                 <TouchableOpacity style={[css.col4, css.btnSquare]} onPress={() => sendForm()}>

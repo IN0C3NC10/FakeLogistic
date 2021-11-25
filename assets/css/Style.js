@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 let shadow = "#333";
+let dark = "#000";
 let light = "#fff";
 let main = "#004aad";
 const css = StyleSheet.create({
@@ -30,6 +31,12 @@ const css = StyleSheet.create({
         color: shadow,
     },
 
+    label: {
+        alignSelf: "flex-start",
+        textAlign: "left",
+        fontSize: 10,
+    },
+
     input: {
         backgroundColor: light,
         fontSize: 19,
@@ -37,7 +44,7 @@ const css = StyleSheet.create({
         borderColor: '#ccc',
         borderBottomWidth: 1,
         paddingHorizontal: 20,
-        textAlign: "center",
+        textAlign: "left",
     },
 
     button: {
@@ -183,7 +190,8 @@ const css = StyleSheet.create({
         paddingTop: 40,
         paddingBottom: 10,
         width: "100%",
-        backgroundColor: "#004aad",
+        // backgroundColor: "#004aad",
+        backgroundColor: dark,
         alignItems: "center",
         justifyContent: "center",
     },
