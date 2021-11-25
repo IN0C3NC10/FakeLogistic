@@ -184,7 +184,7 @@ export default function Edit({ navigation }) {
 
     return (
         <View style={[css.container, css.containerTop]}>
-            <MenuRestricted title='Atualização' navigation={navigation} />
+            <MenuRestricted title='EDIÇÃO DE PRODUTO' navigation={navigation} />
             <ScrollView>
                 {
                     scanned == true ?

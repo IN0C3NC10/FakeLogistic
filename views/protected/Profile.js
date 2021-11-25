@@ -89,7 +89,7 @@ export default function Profile({ navigation }) {
 
     return (
         <View style={[css.container, css.containerTop]}>
-            <MenuRestricted title='Perfil' navigation={navigation} />
+            <MenuRestricted title='REDEFINIR SENHA' navigation={navigation} />
 
             <View>
                 <Text style={[css.error, css.tAC]}>{error}</Text>

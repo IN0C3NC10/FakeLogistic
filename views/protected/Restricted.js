@@ -54,7 +54,7 @@ export default function Restricted({ navigation }) {
                 activeTintColor: '#fff',
                 inactiveTintColor: '#999',
                 activeBackgroundColor: '#004aad',
-                inactiveBackgroundColor: '#003b8a',
+                inactiveBackgroundColor: '#000',
                 style: {
                     fontWeight: 'bold',
                     backgroundColor: '#333',
@@ -88,10 +88,10 @@ export default function Restricted({ navigation }) {
                 name="Profile"
                 component={Profile}
                 options={{
-                    title: 'Perfil',
+                    title: 'Redefinir Senha',
                     headerShown: false,
                     tabBarIcon: () => (
-                        <FontAwesome name="user" size={20} color="white" />
+                        <FontAwesome name="key" size={20} color="white" />
                     )
                 }}
             />

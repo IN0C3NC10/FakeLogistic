@@ -111,7 +111,7 @@ export default function Register({ navigation }) {
 
     return (
         <View style={[css.container, css.containerTop]}>
-            <MenuRestricted title='Cadastro' navigation={navigation} />
+            <MenuRestricted title='CADASTRO DE PRODUTO' navigation={navigation} />
             {
                 response && (
                     <View>

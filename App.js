@@ -18,9 +18,9 @@ export default function App() {
           component={Home}
           options={{
             title: 'FAKE LOGISTIC',
-            headerStyle: { backgroundColor: '#004aad' },
+            headerStyle: { backgroundColor: '#000' },
             headerTintColor: '#fff',
-            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }
+            headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center', }
           }}
         />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
@@ -28,8 +28,8 @@ export default function App() {
           name="Track"
           component={Track}
           options={{
-            title: 'FAKE LOGISTIC - Rastreio',
-            headerStyle: { backgroundColor: '#004aad' },
+            title: 'FAKE LOGISTIC - RASTREIO',
+            headerStyle: { backgroundColor: '#000' },
             headerTintColor: '#fff',
             headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center' }
           }}
