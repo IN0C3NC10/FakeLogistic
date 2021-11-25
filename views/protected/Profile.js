@@ -94,9 +94,9 @@ export default function Profile({ navigation }) {
             <View>
                 <Text style={[css.error, css.tAC]}>{error}</Text>
                 <Text style={[css.note, css.tAC]}>{response}</Text>
-                <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text => setOldPass(text)} />
-                <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text => setNewPass(text)} />
-                <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text => setConfNewPass(text)} />
+                <TextInput style={[css.input, css.mH40, css.mT20]} placeholder='Senha Antiga:' onChangeText={text => setOldPass(text)} secureTextEntry={true} />
+                <TextInput style={[css.input, css.mH40]} placeholder='Nova Senha:' onChangeText={text => setNewPass(text)} secureTextEntry={true} />
+                <TextInput style={[css.input, css.mH40, css.mB30]} placeholder='Confirmação de Senha:' onChangeText={text => setConfNewPass(text)} secureTextEntry={true} />
 
                 <TouchableOpacity onPress={() => sendForm()} style={[css.col4, css.button]}>
                     <FontAwesome name="floppy-o" size={20} color="white" />
