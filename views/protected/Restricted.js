@@ -88,7 +88,7 @@ export default function Restricted({ navigation }) {
                 name="Profile"
                 component={Profile}
                 options={{
-                    title: 'Redefinir Senha',
+                    title: 'Mudar Senha',
                     headerShown: false,
                     tabBarIcon: () => (
                         <FontAwesome name="key" size={20} color="white" />
