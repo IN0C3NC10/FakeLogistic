@@ -1,7 +1,7 @@
 <h1 align="center" id="title">FAKE LOGISTIC</h1>
 <!-- Logo -->
 <p align="center">
-  <img height="300" alt="easy-control-logo" title="FakeLogistic - Pediu? Atrasou!" src="./assets/img/icon2.png" />
+  <img height="300" alt="Fake Logistic - Logo" title="FakeLogistic - Pediu? Atrasou!" src="./assets/img/icon2.png" />
 </p>
 
 
