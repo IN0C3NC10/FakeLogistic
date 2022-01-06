@@ -15,8 +15,8 @@
 	<img src="https://img.shields.io/badge/Made%20with-React Native-00599C?style=for-the-badge&logo=react" title="Feito com React Native" alt="Feito com React Native"></img>
   <img src="https://img.shields.io/badge/Used-Node.js-6DB33F?style=for-the-badge&logo=Node.js&logoColor=6DB33F" title="Usado NodeJs" alt="Usado NodeJs"></img>
     <img src="https://img.shields.io/badge/Used-MySQL-B7472A?style=for-the-badge&logo=mysql&logoColor=B7472A" title="Utilizado o MySQL" alt="Utilizado o MySQL"></img>
-    <!--<img src="https://img.shields.io/badge/Status-Done-blue?style=for-the-badge" title="Status do Projeto:Concluído" alt="Status do Projeto:Concluído"></img>-->
-    <img src="https://img.shields.io/badge/Status-Working-F08705?style=for-the-badge" title="Status do Projeto: Trabalhando" alt="Status do Projeto: Trabalhando"></img>
+    <img src="https://img.shields.io/badge/Status-Done-blue?style=for-the-badge" title="Status do Projeto:Concluído" alt="Status do Projeto:Concluído"></img>
+    <!--<img src="https://img.shields.io/badge/Status-Working-F08705?style=for-the-badge" title="Status do Projeto: Trabalhando" alt="Status do Projeto: Trabalhando"></img>-->
 </p>
 
 
